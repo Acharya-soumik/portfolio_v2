@@ -3,7 +3,7 @@ import { Send, Sparkle, X } from "lucide-react";
 import axios from "axios";
 import TypewriterText from "./AnimatedText";
 
-const ChatInput = ({ isLoading, setIsLoading }) => {
+const ChatInput = ({ isLoading, setLoading }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
@@ -32,9 +32,10 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
   }, []);
 
   const handleSubmit = async () => {
+    console.log(text, "is text");
     if (!text.trim()) return;
 
-    setIsLoading(true);
+    setLoading(true);
     setText("");
     setResponse(null);
     charIndexRef.current = 0;
@@ -48,7 +49,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
     } catch (err) {
       setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
       inputRef.current?.focus();
     }
   };
@@ -80,7 +81,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
   };
 
   return (
-    <div className="w-full max-w-3xl bg-transparent rounded-2xl shadow shadow-fuchsia-50 p-6 transition-all duration-500">
+    <div className="w-full mt-auto md:mt-0 max-w-3xl bg-transparent rounded-2xl shadow  p-6 transition-all duration-500">
       <div className="flex justify-between items-center mb-6">
         <p className="text-white text-xl font-semibold flex items-center gap-3">
           {isLoading ? (
@@ -93,7 +94,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
         {response && (
           <button
             onClick={handleClear}
-            className="p-2 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition-all duration-300"
+            className="p-2 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition-all duration-300 z-30"
             aria-label="Clear response"
           >
             <X size={20} />
@@ -104,7 +105,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
       <div className="space-y-6">
         {!response && !isLoading && (
           <div
-            className={`flex bg-black items-center gap-3 bg-gray-800/50 rounded-xl p-3 
+            className={`flex w-full md:w-[70%] bg-black items-center gap-3 bg-gray-800/50 rounded-xl p-3 
               ring-1 ring-gray-700 transition-all duration-300 
               ${
                 isFocused
@@ -120,7 +121,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Ask me anything..."
-              className="w-full bg-transparent text-white focus:outline-none placeholder:text-gray-500 text-lg"
+              className="w-full bg-transparent text-white focus:outline-none placeholder:text-gray-200 text-lg z-40"
             />
             <button
               onClick={handleSubmit}
@@ -165,7 +166,7 @@ const ChatInput = ({ isLoading, setIsLoading }) => {
             onClick={handleClear}
             className="bg-transparent rounded-xl p-6 max-h-[60vh] overflow-y-auto custom-scrollbar 
               ring-1 ring-gray-700 hover:ring-2 hover:ring-purple-500/30 
-              transition-all duration-300 cursor-pointer"
+              transition-all duration-300 cursor-pointer z-5"
           >
             <TypewriterText
               text={res}
