@@ -42,9 +42,12 @@ const ChatInput = ({ isLoading, setLoading }) => {
     frameRef.current = requestAnimationFrame(animate);
 
     try {
-      const result = await axios.post("http://localhost:8000/run_langflow", {
-        message: text,
-      });
+      const result = await axios.post(
+        "http://ec2-3-110-114-203.ap-south-1.compute.amazonaws.com:8000/run_langflow",
+        {
+          message: text,
+        }
+      );
       setResponse(result.data);
     } catch (err) {
       setError(err.message);
