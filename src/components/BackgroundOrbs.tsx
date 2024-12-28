@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from "react";
-
+import { useEffect, useRef } from "react";
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const BackgroundOrbs = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas: any = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const orbs = [];
+    const orbs: any = [];
     const orbCount = 12;
 
     const resizeCanvas = () => {
@@ -40,7 +40,7 @@ const BackgroundOrbs = () => {
       }
     };
 
-    const drawOrb = (orb) => {
+    const drawOrb = (orb: any) => {
       ctx.beginPath();
       ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
       ctx.fillStyle = orb.color;
@@ -50,7 +50,7 @@ const BackgroundOrbs = () => {
       ctx.closePath();
     };
 
-    const updateOrb = (orb) => {
+    const updateOrb = (orb: any) => {
       orb.x += orb.speedX;
       orb.y += orb.speedY;
 
@@ -66,7 +66,7 @@ const BackgroundOrbs = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      orbs.forEach((orb) => {
+      orbs.forEach((orb: any) => {
         updateOrb(orb);
         drawOrb(orb);
       });

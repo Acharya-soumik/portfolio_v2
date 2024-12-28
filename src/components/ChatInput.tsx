@@ -1,27 +1,34 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { Send, Sparkle, X } from "lucide-react";
 import axios from "axios";
 import TypewriterText from "./AnimatedText";
 
-const ChatInput = ({ isLoading, setLoading }) => {
+const ChatInput = ({
+  isLoading,
+  setLoading,
+}: {
+  isLoading: boolean;
+  setLoading: any;
+}) => {
   const [text, setText] = useState("");
-  const [error, setError] = useState(null);
-  const [response, setResponse] = useState(null);
+  const [error, setError] = useState<null | string>(null);
+  const [response, setResponse] = useState<any>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const frameRef = useRef();
-  const startTimeRef = useRef();
+  const frameRef = useRef<number | null>();
+  const startTimeRef = useRef<number | null>(null);
   const charIndexRef = useRef(0);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const sampleResponse =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt cumque asperiores cum cupiditate, neque magnam quas aspernatur quia rerum! Aliquam laboriosam quam iure provident ab neque itaque dignissimos, architecto nobis!";
 
-  const animate = useCallback((timestamp) => {
+  const animate = useCallback((timestamp: number) => {
     if (!startTimeRef.current) startTimeRef.current = timestamp;
     const progress = timestamp - startTimeRef.current;
 
     if (progress > 30 && charIndexRef.current < sampleResponse.length) {
-      setDisplayText((prev) => prev + sampleResponse[charIndexRef.current]);
+      setText((prev) => prev + sampleResponse[charIndexRef.current]);
       charIndexRef.current++;
       startTimeRef.current = timestamp;
     }
@@ -49,7 +56,7 @@ const ChatInput = ({ isLoading, setLoading }) => {
         }
       );
       setResponse(result.data);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -57,7 +64,7 @@ const ChatInput = ({ isLoading, setLoading }) => {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: any) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
